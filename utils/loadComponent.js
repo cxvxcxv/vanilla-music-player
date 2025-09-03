@@ -4,6 +4,11 @@
  * @param {HTMLElement} container - target container element (will be replaced)
  */
 export async function loadComponent(htmlPath, cssPath, container) {
+	if (!container) {
+		console.error('container not found');
+		return;
+	}
+
 	try {
 		// fetch html
 		const res = await fetch(htmlPath);
@@ -33,7 +38,7 @@ export async function loadComponent(htmlPath, cssPath, container) {
 			document.head.appendChild(link);
 		}
 
-		return newEl; // return reference to new element in case caller needs it
+		return newEl; // return reference to new element
 	} catch (err) {
 		console.error('Component load error:', err);
 	}

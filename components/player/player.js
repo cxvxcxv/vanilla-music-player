@@ -7,3 +7,21 @@ export async function initPlayer(container) {
 		container
 	);
 }
+
+let currentAudio = null;
+
+/**
+ * Plays a track preview
+ * @param {string} url - The previewUrl from iTunes API
+ */
+
+export function playTrack(url) {
+	// stop previous
+	if (currentAudio) {
+		currentAudio.pause();
+	}
+
+	currentAudio = new Audio(url);
+	currentAudio.play();
+	console.log('play');
+}

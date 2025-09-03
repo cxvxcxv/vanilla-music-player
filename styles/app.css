@@ -1,18 +1,29 @@
 @import './shared.css';
 
+body {
+	/* disabling text section */
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
 #app {
 	display: flex;
 	flex-direction: column;
-	min-height: 100vh;
+	height: 100vh;
+	color: var(--text-color);
 }
 
 #layout {
 	display: flex;
 	flex: 1;
+	overflow: hidden;
 }
 
 #main {
 	flex: 1;
 	padding: 1rem;
 	background-color: var(--background-color);
+	overflow-y: auto;
+	scrollbar-width: none;
 }

@@ -3,7 +3,8 @@
 .player {
 	background-color: var(--background-color);
 	border-top: 2px solid var(--primary-color);
-	color: white;
 	text-align: center;
 	padding: 1.5rem 0;
+	height: 4rem;
+	flex-shrink: 0;
 }
