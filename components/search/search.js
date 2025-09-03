@@ -1,14 +1,11 @@
-export async function initSearch(container) {
-	//load component html
-	const res = await fetch('/components/search/search.html');
-	const html = await res.text();
-	container.innerHTML = html;
+import { loadComponent } from '../../utils/loadComponent.js';
 
-	//attach styles dynamically
-	const link = document.createElement('link');
-	link.rel = 'stylesheet';
-	link.href = '/components/search/search.css';
-	document.head.appendChild(link);
+export async function initSearch(container) {
+	await loadComponent(
+		'/components/search/search.html',
+		'/components/search/search.css',
+		container
+	);
 
 	//attach event
 	const input = container.querySelector('#searchInput');

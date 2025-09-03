@@ -1,0 +1,22 @@
+@import '/styles/shared.css';
+
+.search {
+	display: flex;
+	gap: 0.5rem;
+	padding: 1rem;
+}
+
+.search input {
+	flex: 1;
+	padding: 0.5rem;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+}
+
+.search button {
+	background: var(--primary-color);
+	border: none;
+	padding: 0.5rem 1rem;
+	border-radius: 8px;
+	cursor: pointer;
+}
