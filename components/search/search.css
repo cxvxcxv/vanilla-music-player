@@ -10,25 +10,37 @@
 .searchbar {
 	display: flex;
 	gap: 1rem;
+	margin-bottom: 2rem;
 }
 
 .search input {
 	flex: 1;
 	padding: 0.5rem;
 	border: 1px solid #ccc;
-	border-radius: 8px;
+	border-radius: 1rem;
 }
 
 .search button {
 	background: var(--primary-color);
 	border: none;
 	padding: 0.5rem 1rem;
-	border-radius: 8px;
+	border-radius: 1rem;
 	cursor: pointer;
 }
 
-#results {
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
+.headings {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	padding: 0.5rem 1rem;
+	opacity: 0.7;
+	font-weight: 600;
+	font-size: 0.9rem;
+
+	> .title {
+		margin-left: 6rem;
+	}
+
+	> .release {
+		text-align: center;
+	}
 }

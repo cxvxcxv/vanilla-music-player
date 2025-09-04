@@ -6,4 +6,5 @@
 	width: 16rem;
 	background-color: #252525;
 	padding: 1rem;
+	border-right: 2px solid var(--text-color);
 }

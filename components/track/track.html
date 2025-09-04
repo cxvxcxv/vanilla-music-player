@@ -3,16 +3,23 @@
 	data-url="${track.previewUrl}"
 	data-index="${idx}"
 >
-	<img
-		class="cover"
-		src="${track.artworkUrl100}"
-		alt="cover"
-	/>
-	<div class="names">
-		<p class="title"></p>
-		<p class="artist"></p>
+	<div class="covernames">
+		<img
+			class="play"
+			src="/assets/icons/play.svg"
+			alt="play"
+		/>
+		<img
+			class="cover"
+			src="${track.artworkUrl100}"
+			alt="cover"
+		/>
+		<div class="names">
+			<p class="title"></p>
+			<p class="artist"></p>
+		</div>
 	</div>
 	<div>
-		<p class="duration"></p>
+		<p class="date"></p>
 	</div>
 </div>

@@ -25,19 +25,32 @@ export async function initSearch(container) {
 		const query = input.value.trim();
 		if (!query) return;
 
+		//fetch
 		const data = await fetchFromItunes({
 			term: query,
 			entity: 'musicTrack',
 			limit: 10,
 		});
 
-		results.innerHTML = '';
-		for (const track of data.results) {
-			const el = await renderTrack(track);
-			results.appendChild(el);
+		//render each track
+		if (data.results?.length) {
+			// add header row once
+			results.innerHTML = `
+		<div class="headings">
+			<h6 class="title">TITLE</h6>
+			<h6 class="release">RELEASE</h6>
+		</div>
+	`;
+
+			// add tracks
+			for (const track of data.results) {
+				const el = await renderTrack(track);
+				results.appendChild(el);
+			}
 		}
 	});
 
+	//play track on click
 	results.addEventListener('click', e => {
 		const trackEl = e.target.closest('.track');
 		if (!trackEl || !results.contains(trackEl)) return;

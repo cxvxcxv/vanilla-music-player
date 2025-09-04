@@ -1,3 +1,4 @@
+import { formatDate } from '../../utils/formatDate.js';
 import { loadComponent } from '../../utils/loadComponent.js';
 
 export async function renderTrack(track) {
@@ -16,6 +17,9 @@ export async function renderTrack(track) {
 
 	const artist = el.querySelector('.artist');
 	if (artist) artist.textContent = track.artistName;
+
+	const date = el.querySelector('.date');
+	if (date) date.textContent = formatDate(track.releaseDate);
 
 	el.dataset.url = track.previewUrl;
 

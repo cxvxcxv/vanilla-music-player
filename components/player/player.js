@@ -23,5 +23,4 @@ export function playTrack(url) {
 
 	currentAudio = new Audio(url);
 	currentAudio.play();
-	console.log('play');
 }
