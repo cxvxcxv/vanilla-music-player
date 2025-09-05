@@ -1,10 +1,13 @@
 import { loadComponent } from '../../utils/loadComponent.js';
 
+// player state
 let audio,
 	coverEl,
 	titleEl,
 	artistEl,
-	playerToggleBtn,
+	prevBtn,
+	toggleBtn,
+	nextBtn,
 	isPlaying = false,
 	currentTrackEl = null;
 
@@ -15,28 +18,39 @@ export async function initPlayer(container) {
 		container
 	);
 
+	// cache elements
 	audio = playerRoot.querySelector('#audio');
 	coverEl = playerRoot.querySelector('#player-cover');
 	titleEl = playerRoot.querySelector('#player-title');
 	artistEl = playerRoot.querySelector('#player-artist');
-	playerToggleBtn = playerRoot.querySelector('#player-toggle');
+	prevBtn = playerRoot.querySelector('#player-prev');
+	toggleBtn = playerRoot.querySelector('#player-toggle');
+	nextBtn = playerRoot.querySelector('#player-next');
 
-	if (!audio || !playerToggleBtn) {
+	if (!audio || !toggleBtn) {
 		console.error('Player elements not found');
 		return;
 	}
 
 	// main toggle button (in the player UI)
-	playerToggleBtn.addEventListener('click', e => {
-		e.stopPropagation(); // just in case
-		if (audio.paused && audio.src) {
-			audio.play();
-		} else {
-			audio.pause();
-		}
+	toggleBtn.addEventListener('click', e => {
+		e.stopPropagation();
+		if (audio.paused && audio.src) audio.play();
+		else audio.pause();
 	});
 
-	// update icons when state changes
+	// skip buttons
+	prevBtn?.addEventListener('click', e => {
+		e.stopPropagation();
+		skipTrack(-1);
+	});
+
+	nextBtn?.addEventListener('click', e => {
+		e.stopPropagation();
+		skipTrack(1);
+	});
+
+	// audio events
 	audio.addEventListener('play', () => {
 		isPlaying = true;
 		updatePlayerToggleIcon();
@@ -51,10 +65,11 @@ export async function initPlayer(container) {
 }
 
 /**
- * Plays a track preview
- * @param {string} url - the previewUrl from iTunes API
- * @param {object} trackInfo - info about track
+ * play a track preview
+ * @param {string} url - previewUrl from iTunes API
+ * @param {object} trackInfo - { cover, title, artist, element }
  */
+
 export function playTrack(url, trackInfo = {}) {
 	if (!audio) return;
 
@@ -66,7 +81,7 @@ export function playTrack(url, trackInfo = {}) {
 	if (trackInfo.title) titleEl.textContent = trackInfo.title;
 	if (trackInfo.artist) artistEl.textContent = trackInfo.artist;
 
-	// reset previous track index if another track is played
+	// reset previous track
 	if (currentTrackEl && currentTrackEl !== trackInfo.element) {
 		const oldIndex = currentTrackEl.dataset.index;
 		const oldIndexEl = currentTrackEl.querySelector('.track-index');
@@ -74,38 +89,69 @@ export function playTrack(url, trackInfo = {}) {
 		currentTrackEl.classList.remove('active');
 	}
 
-	// highlight new active track
+	// set new active track
 	if (trackInfo.element) {
 		currentTrackEl = trackInfo.element;
 		currentTrackEl.classList.add('active');
 
-		// replace index with toggle button
-		const indexEl = currentTrackEl.querySelector('.track-index');
-		if (indexEl) {
-			indexEl.innerHTML = `<button class="track-toggle"><img src="/assets/icons/pause.svg"></button>`;
-			const trackToggle = indexEl.querySelector('.track-toggle');
-
-			trackToggle.addEventListener('click', e => {
-				e.stopPropagation(); // prevent triggering row click
-				if (audio.paused) {
-					audio.play();
-				} else {
-					audio.pause();
-				}
-			});
-		}
+		createTrackToggle(currentTrackEl);
 	}
+}
+
+// ---------- HELPERS ----------
+
+// skip logic
+function skipTrack(direction) {
+	if (!currentTrackEl) return;
+
+	const allTracks = Array.from(
+		currentTrackEl.parentElement.querySelectorAll('.track')
+	);
+	const currentIndex = allTracks.indexOf(currentTrackEl);
+
+	let newIndex =
+		(currentIndex + direction + allTracks.length) % allTracks.length;
+	const newTrackEl = allTracks[newIndex];
+	const url = newTrackEl.dataset.url;
+
+	if (!url) return;
+
+	playTrack(url, {
+		cover: newTrackEl.querySelector('.track-cover')?.src,
+		title: newTrackEl.querySelector('.track-title')?.textContent,
+		artist: newTrackEl.querySelector('.track-artist')?.textContent,
+		element: newTrackEl,
+	});
+}
+
+// create or replace toggle button inside track row
+function createTrackToggle(trackEl) {
+	const indexEl = trackEl.querySelector('.track-index');
+	if (!indexEl) return;
+
+	indexEl.innerHTML = `
+		<button class="track-toggle">
+			<img src="/assets/icons/pause.svg" alt="pause">
+		</button>
+	`;
+
+	const trackToggle = indexEl.querySelector('.track-toggle');
+	trackToggle.addEventListener('click', e => {
+		e.stopPropagation();
+		if (audio.paused) audio.play();
+		else audio.pause();
+	});
 }
 
 // update icon in the player bar
 function updatePlayerToggleIcon() {
-	if (!playerToggleBtn) return;
-	playerToggleBtn.innerHTML = isPlaying
+	if (!toggleBtn) return;
+	toggleBtn.innerHTML = isPlaying
 		? `<img src="/assets/icons/pause.svg" alt="pause" />`
 		: `<img src="/assets/icons/play.svg" alt="play" />`;
 }
 
-// update icon on the track row
+// update icon on the active track row
 function updateTrackToggleIcon(playing) {
 	if (!currentTrackEl) return;
 

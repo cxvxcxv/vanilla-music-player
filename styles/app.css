@@ -32,4 +32,5 @@ button {
 	background-color: var(--background-color);
 	overflow-y: auto;
 	scrollbar-width: none;
+	word-break: break-all;
 }

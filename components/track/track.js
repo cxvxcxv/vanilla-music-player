@@ -1,13 +1,21 @@
 import { formatDate } from '../../utils/formatDate.js';
 import { loadComponent } from '../../utils/loadComponent.js';
 
-export async function renderTrack(track, index) {
-	const el = await loadComponent(
-		'/components/track/track.html',
-		'/components/track/track.css',
-		document.createElement('div') // temp container, will be replaced
-	);
+let cachedTrackTemplate = null;
 
+export async function renderTrack(track, index) {
+	// load component once
+	if (!cachedTrackTemplate) {
+		const el = await loadComponent(
+			'/components/track/track.html',
+			'/components/track/track.css',
+			document.createElement('div')
+		);
+		cachedTrackTemplate = el; // store original
+	}
+
+	// clone so we don’t mutate the cached one
+	const el = cachedTrackTemplate.cloneNode(true);
 	el.dataset.index = index + 1;
 
 	// populate content

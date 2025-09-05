@@ -47,6 +47,8 @@ export async function initSearch(container) {
 				const el = await renderTrack(track, index);
 				results.appendChild(el);
 			});
+		} else {
+			results.innerHTML = `<h1>${query} not found. Try another search</h1>`;
 		}
 	});
 
