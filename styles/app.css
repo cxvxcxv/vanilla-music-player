@@ -7,6 +7,12 @@ body {
 	user-select: none;
 }
 
+button {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}
+
 #app {
 	display: flex;
 	flex-direction: column;

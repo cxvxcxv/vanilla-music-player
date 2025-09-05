@@ -28,16 +28,19 @@
 	cursor: pointer;
 }
 
-.headings {
+.search-headings {
 	display: grid;
 	grid-template-columns: 2fr 1fr;
 	padding: 0.5rem 1rem;
 	opacity: 0.7;
 	font-weight: 600;
 	font-size: 0.9rem;
+	border-bottom: 1px solid gray;
+	margin-bottom: 1rem;
 
 	> .title {
 		margin-left: 6rem;
+		border-right: 1px solid gray;
 	}
 
 	> .release {

@@ -36,17 +36,17 @@ export async function initSearch(container) {
 		if (data.results?.length) {
 			// add header row once
 			results.innerHTML = `
-		<div class="headings">
+		<div class="search-headings">
 			<h6 class="title">TITLE</h6>
 			<h6 class="release">RELEASE</h6>
 		</div>
 	`;
 
 			// add tracks
-			for (const track of data.results) {
-				const el = await renderTrack(track);
+			data.results.forEach(async (track, index) => {
+				const el = await renderTrack(track, index);
 				results.appendChild(el);
-			}
+			});
 		}
 	});
 
@@ -56,6 +56,13 @@ export async function initSearch(container) {
 		if (!trackEl || !results.contains(trackEl)) return;
 
 		const url = trackEl.dataset.url;
-		if (url) playTrack(url);
+		if (!url) return;
+
+		playTrack(url, {
+			cover: trackEl.querySelector('.track-cover')?.src,
+			title: trackEl.querySelector('.track-title')?.textContent,
+			artist: trackEl.querySelector('.track-artist')?.textContent,
+			element: trackEl,
+		});
 	});
 }

@@ -6,9 +6,14 @@
 	align-items: center;
 	padding: 0.5rem 1rem;
 	border-radius: 1rem;
+	cursor: pointer;
 }
 
 .track:hover {
+	background-color: var(--primary-color);
+}
+
+.track.active {
 	background-color: var(--primary-color);
 }
 
@@ -17,14 +22,27 @@
 	max-height: 3rem;
 	flex: 1;
 	min-width: 0;
+	align-items: center;
 }
 
-.play {
+.track-index {
+	font-size: 0.9rem;
+	opacity: 0.7;
 	aspect-ratio: square;
-	width: 1rem;
+	width: 0.9rem;
 }
 
-.cover {
+.track-toggle {
+	padding: 0 !important;
+	display: flex;
+	place-items: center;
+	> img {
+		aspect-ratio: square;
+		height: 0.9rem;
+	}
+}
+
+.track-cover {
 	height: 3rem;
 	aspect-ratio: square;
 	border-radius: 0.5rem;
@@ -38,20 +56,20 @@
 	gap: 0.5rem;
 	min-width: 0;
 
-	> .title,
-	.artist {
+	> .track-title,
+	.track-artist {
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
 	}
 
-	> .artist {
+	> .track-artist {
 		font-size: 0.9rem;
 		opacity: 0.7;
 	}
 }
 
-.date {
+.track-date {
 	opacity: 0.7;
 	text-align: center;
 	font-size: 0.9rem;

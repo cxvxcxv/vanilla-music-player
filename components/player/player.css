@@ -2,9 +2,39 @@
 
 .player {
 	background-color: var(--background-color);
-	border-top: 2px solid var(--text-color);
-	text-align: center;
-	padding: 1.5rem 0;
+	border-top: 2px solid var(--primary-color);
 	height: 4rem;
 	flex-shrink: 0;
+	padding: 1rem;
+}
+
+.player-ui {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	align-items: center;
+	justify-items: center;
+	height: 100%;
+}
+
+.player-covernames {
+	display: flex;
+	gap: 1rem;
+	justify-self: self-start;
+}
+
+.player-cover {
+	aspect-ratio: square;
+	height: 4rem;
+}
+
+.player-names {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 0.5rem;
+
+	> .player-artist {
+		font-size: 0.9rem;
+		opacity: 0.7;
+	}
 }
