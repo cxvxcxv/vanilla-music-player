@@ -1,3 +1,4 @@
+import { formatTime } from '../../utils/formatTime.js';
 import { loadComponent } from '../../utils/loadComponent.js';
 
 // player state
@@ -9,7 +10,10 @@ let audio,
 	toggleBtn,
 	nextBtn,
 	isPlaying = false,
-	currentTrackEl = null;
+	currentTrackEl = null,
+	progressEl = null,
+	currentTimeEl,
+	totalTimeEl;
 
 export async function initPlayer(container) {
 	const playerRoot = await loadComponent(
@@ -26,6 +30,9 @@ export async function initPlayer(container) {
 	prevBtn = playerRoot.querySelector('#player-prev');
 	toggleBtn = playerRoot.querySelector('#player-toggle');
 	nextBtn = playerRoot.querySelector('#player-next');
+	progressEl = playerRoot.querySelector('#player-progress');
+	currentTimeEl = playerRoot.querySelector('#player-current-time');
+	totalTimeEl = playerRoot.querySelector('#player-total-time');
 
 	if (!audio || !toggleBtn) {
 		console.error('Player elements not found');
@@ -62,11 +69,36 @@ export async function initPlayer(container) {
 		updatePlayerToggleIcon();
 		updateTrackToggleIcon(false);
 	});
+
+	// update progress bar while playing
+	audio.addEventListener('timeupdate', () => {
+		if (!progressEl || !audio.duration) return;
+		const percent = (audio.currentTime / audio.duration) * 100;
+		progressEl.value = percent;
+		progressEl.style.setProperty('--progress', `${percent}%`);
+
+		if (currentTimeEl)
+			currentTimeEl.textContent = formatTime(audio.currentTime);
+	});
+
+	// set duration max value when metadata is loaded
+	audio.addEventListener('loadedmetadata', () => {
+		if (progressEl) progressEl.value = 0;
+		if (totalTimeEl) totalTimeEl.textContent = formatTime(audio.duration);
+		if (currentTimeEl) currentTimeEl.textContent = '0:00';
+		progressEl.style.setProperty('--progress', '0%');
+	});
+
+	progressEl?.addEventListener('input', () => {
+		if (!audio.duration) return;
+		const newTime = (progressEl.value / 100) * audio.duration;
+		audio.currentTime = newTime;
+	});
 }
 
 /**
  * play a track preview
- * @param {string} url - previewUrl from iTunes API
+ * @param {string} url - previewUrl from itunes api
  * @param {object} trackInfo - { cover, title, artist, element }
  */
 
@@ -76,7 +108,7 @@ export function playTrack(url, trackInfo = {}) {
 	audio.src = url;
 	audio.play();
 
-	// update player UI
+	// update player ui
 	if (trackInfo.cover) coverEl.src = trackInfo.cover;
 	if (trackInfo.title) titleEl.textContent = trackInfo.title;
 	if (trackInfo.artist) artistEl.textContent = trackInfo.artist;
