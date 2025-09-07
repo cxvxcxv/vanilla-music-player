@@ -7,7 +7,7 @@
 	padding: 1rem;
 }
 
-.searchbar {
+#search-form {
 	display: flex;
 	gap: 1rem;
 	margin-bottom: 2rem;

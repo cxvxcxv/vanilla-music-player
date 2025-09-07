@@ -43,12 +43,16 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 0.5rem;
+	gap: 0.6rem;
 }
 
 .player-buttons {
 	display: flex;
 	gap: 2rem;
+	> button {
+		display: flex;
+		place-items: center;
+	}
 }
 
 .player-progress-wrapper {
@@ -63,6 +67,7 @@
 	height: 6px;
 	border-radius: 3px;
 	outline: none;
+	cursor: pointer;
 
 	/* show fill up to --progress */
 	background: linear-gradient(

@@ -10,49 +10,52 @@ export async function initSearch(container) {
 		container
 	);
 
-	//attach event
-	const input = searchRoot.querySelector('#searchInput');
-	const btn = searchRoot.querySelector('#searchBtn');
-	const results = searchRoot.querySelector('#results');
+	// attach event
+	const input = searchRoot.querySelector('#search-input');
+	const form = searchRoot.querySelector('#search-form');
+	const results = searchRoot.querySelector('#search-results');
 
-	if (!input || !btn) {
+	if (!input) {
 		console.error('Search input or button not found');
 		return;
 	}
 
-	//add listener to the search button
-	btn.addEventListener('click', async () => {
+	// add listener to the form submition
+	form.addEventListener('submit', async e => {
+		e.preventDefault();
+
 		const query = input.value.trim();
 		if (!query) return;
 
-		//fetch
+		// fetch
 		const data = await fetchFromItunes({
 			term: query,
 			entity: 'musicTrack',
 			limit: 10,
 		});
 
-		//render each track
-		if (data.results?.length) {
-			// add header row once
-			results.innerHTML = `
+		// display a msg if a track is not found
+		if (!data.results.length) {
+			results.innerHTML = `<h1>${query} not found. Try another search</h1>`;
+			return;
+		}
+
+		// add header row once
+		results.innerHTML = `
 		<div class="search-headings">
 			<h6 class="title">TITLE</h6>
 			<h6 class="release">RELEASE</h6>
 		</div>
 	`;
 
-			// add tracks
-			data.results.forEach(async (track, index) => {
-				const el = await renderTrack(track, index);
-				results.appendChild(el);
-			});
-		} else {
-			results.innerHTML = `<h1>${query} not found. Try another search</h1>`;
-		}
+		//render tracks
+		data.results.forEach(async (track, index) => {
+			const el = await renderTrack(track, index);
+			results.appendChild(el);
+		});
 	});
 
-	//play track on click
+	// play track on click
 	results.addEventListener('click', e => {
 		const trackEl = e.target.closest('.track');
 		if (!trackEl || !results.contains(trackEl)) return;
