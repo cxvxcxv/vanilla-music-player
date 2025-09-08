@@ -2,22 +2,23 @@
 
 .track {
 	display: grid;
-	grid-template-columns: 2fr 1fr;
+	grid-template-columns: 2fr 1fr 3rem;
 	align-items: center;
 	padding: 0.5rem 1rem;
 	border-radius: 1rem;
 	cursor: pointer;
+	border: 1px solid transparent;
 }
 
 .track:hover {
-	background-color: var(--primary-color);
+	border: 1px solid var(--primary-color);
 }
 
 .track.active {
-	background-color: var(--primary-color);
+	border: 1px solid var(--primary-color);
 }
 
-.covernames {
+.track-covernames {
 	display: flex;
 	max-height: 3rem;
 	flex: 1;
@@ -37,6 +38,8 @@
 	padding: 0 !important;
 	display: flex;
 	place-items: center;
+	background-color: transparent;
+
 	> img {
 		aspect-ratio: square;
 		height: 0.9rem;
@@ -50,7 +53,7 @@
 	margin: 0 1rem;
 }
 
-.names {
+.track-names {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -70,8 +73,21 @@
 	}
 }
 
-.track-date {
-	opacity: 0.7;
-	text-align: center;
-	font-size: 0.9rem;
+.track-release {
+	> .track-date {
+		opacity: 0.7;
+		text-align: center;
+		font-size: 0.9rem;
+	}
+}
+
+.track-like .heart-icon path {
+	fill: none;
+	stroke: var(--text-color);
+	stroke-width: 1.5px;
+}
+
+.track-like.liked .heart-icon path {
+	fill: var(--primary-color);
+	stroke: none;
 }

@@ -20,7 +20,7 @@
 	border-radius: 1rem;
 }
 
-.search button {
+.search-button {
 	background: var(--primary-color);
 	border: none;
 	padding: 0.5rem 1rem;
@@ -30,7 +30,7 @@
 
 .search-headings {
 	display: grid;
-	grid-template-columns: 2fr 1fr;
+	grid-template-columns: 2fr 1fr 48px;
 	padding: 0.5rem 1rem;
 	opacity: 0.7;
 	font-weight: 600;

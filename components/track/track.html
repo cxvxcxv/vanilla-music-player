@@ -2,18 +2,39 @@
 	class="track"
 	data-url="${track.previewUrl}"
 >
-	<div class="covernames">
+	<div class="track-covernames">
 		<p class="track-index"></p>
 		<img
 			class="track-cover"
 			alt="cover"
 		/>
-		<div class="names">
+		<div class="track-names">
 			<p class="track-title"></p>
 			<p class="track-artist"></p>
 		</div>
 	</div>
-	<div>
+	<div class="track-release">
 		<p class="track-date"></p>
+	</div>
+	<div class="">
+		<button
+			class="track-like"
+			aria-label="Like track"
+		>
+			<svg
+				class="heart-icon"
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 24 24"
+				width="20"
+				height="20"
+			>
+				<path
+					d="M12 21s-6-4.35-9-8.28C-1.5 7.36 4.5 1.5 12 7.5c7.5-6 13.5-.14 9 5.22C18 16.65 12 21 12 21z"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+				/>
+			</svg>
+		</button>
 	</div>
 </div>
