@@ -1,6 +1,5 @@
 import { fetchFromItunes } from '../../utils/api.js';
 import { loadComponent } from '../../utils/loadComponent.js';
-import { playTrack } from '../player/player.js';
 import { renderTrack } from '../track/track.js';
 
 export async function initSearch(container) {
@@ -52,22 +51,6 @@ export async function initSearch(container) {
 		data.results.forEach(async (track, index) => {
 			const el = await renderTrack(track, index);
 			results.appendChild(el);
-		});
-	});
-
-	// play track on click
-	results.addEventListener('click', e => {
-		const trackEl = e.target.closest('.track');
-		if (!trackEl || !results.contains(trackEl)) return;
-
-		const url = trackEl.dataset.url;
-		if (!url) return;
-
-		playTrack(url, {
-			cover: trackEl.querySelector('.track-cover')?.src,
-			title: trackEl.querySelector('.track-title')?.textContent,
-			artist: trackEl.querySelector('.track-artist')?.textContent,
-			element: trackEl,
 		});
 	});
 }

@@ -1,6 +1,7 @@
 import { formatDate } from '../../utils/formatDate.js';
 import { getLikedTrack, toggleLikedTrack } from '../../utils/likedStore.js';
 import { loadComponent } from '../../utils/loadComponent.js';
+import { playTrack } from '../player/player.js';
 
 let cachedTrackTemplate = null;
 
@@ -38,6 +39,7 @@ export async function renderTrack(track, index) {
 	const likeBtn = el.querySelector('.track-like');
 
 	if (likeBtn) {
+		// style liked tracks like button
 		const isLiked = getLikedTrack(track.previewUrl);
 		isLiked
 			? likeBtn.classList.add('liked')
@@ -53,6 +55,16 @@ export async function renderTrack(track, index) {
 				: likeBtn.classList.add('liked');
 		});
 	}
+
+	// play track on click
+	el.addEventListener('click', e => {
+		playTrack(track.previewUrl, {
+			cover: track.artworkUrl100,
+			title: track.trackName,
+			artist: track.artistName,
+			element: el,
+		});
+	});
 
 	el.dataset.url = track.previewUrl;
 
