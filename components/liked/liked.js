@@ -10,16 +10,22 @@ export async function initLiked(container) {
 	);
 
 	const results = likedRoot.querySelector('#liked-results');
-	const tracks = getLikedTracks();
-
-	if (!tracks.length) {
-		results.innerHTML = "<h2>You don't have liked tracks yet</h2>";
-		return;
+	function renderLikedList() {
+		results.innerHTML = '';
+		const tracks = getLikedTracks();
+		if (!tracks.length) {
+			results.innerHTML = "<h2>You don't have liked tracks yet</h2>";
+			return;
+		}
+		tracks.forEach(async (track, index) => {
+			const el = await renderTrack(track, index);
+			results.appendChild(el);
+		});
 	}
 
-	//render liked tracks
-	tracks.forEach(async (track, index) => {
-		const el = await renderTrack(track, index);
-		results.appendChild(el);
-	});
+	// initial render
+	renderLikedList();
+
+	// refresh whenever liked tracks change
+	document.addEventListener('likedUpdated', renderLikedList);
 }

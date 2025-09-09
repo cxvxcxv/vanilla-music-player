@@ -1,5 +1,5 @@
 import { formatDate } from '../../utils/formatDate.js';
-import { toggleLikedTrack } from '../../utils/likedStore.js';
+import { getLikedTrack, toggleLikedTrack } from '../../utils/likedStore.js';
 import { loadComponent } from '../../utils/loadComponent.js';
 
 let cachedTrackTemplate = null;
@@ -36,7 +36,14 @@ export async function renderTrack(track, index) {
 	if (date) date.textContent = formatDate(track.releaseDate);
 
 	const likeBtn = el.querySelector('.track-like');
+
 	if (likeBtn) {
+		const isLiked = getLikedTrack(track.previewUrl);
+		isLiked
+			? likeBtn.classList.add('liked')
+			: likeBtn.classList.remove('liked');
+
+		// toggle on click
 		likeBtn.addEventListener('click', e => {
 			e.stopPropagation();
 			toggleLikedTrack(track);

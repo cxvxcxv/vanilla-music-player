@@ -73,7 +73,7 @@
 	background: linear-gradient(
 		to right,
 		var(--primary-color) var(--progress, 0%),
-		var(--text-color) var(--progress, 0%)
+		var(--text-primary) var(--progress, 0%)
 	);
 }
 
@@ -95,7 +95,7 @@
 #player-current-time,
 #player-total-time {
 	font-size: 0.85rem;
-	color: var(--text-color);
+	color: var(--text-primary);
 	width: 40px;
 	text-align: center;
 }

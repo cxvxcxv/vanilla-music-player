@@ -83,7 +83,7 @@
 
 .track-like .heart-icon path {
 	fill: none;
-	stroke: var(--text-color);
+	stroke: var(--text-primary);
 	stroke-width: 1.5px;
 }
 

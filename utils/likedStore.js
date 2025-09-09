@@ -5,6 +5,11 @@ export function getLikedTracks() {
 	return raw ? JSON.parse(raw) : [];
 }
 
+export function getLikedTrack(url) {
+	const likedTrack = getLikedTracks().some(track => track.previewUrl === url);
+	return likedTrack;
+}
+
 export function setLikedTracks(tracks) {
 	return localStorage.setItem(STORAGE_KEY, JSON.stringify(tracks));
 }
@@ -27,4 +32,7 @@ export function toggleLikedTrack(track) {
 	const likedTracks = getLikedTracks();
 	const exists = likedTracks.some(t => t.previewUrl === track.previewUrl);
 	exists ? removeLikedTrack(track.previewUrl) : addLikedTrack(track);
+
+	// notify others
+	document.dispatchEvent(new Event('likedUpdated'));
 }

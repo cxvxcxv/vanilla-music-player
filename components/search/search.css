@@ -35,12 +35,12 @@
 	opacity: 0.7;
 	font-weight: 600;
 	font-size: 0.9rem;
-	border-bottom: 1px solid gray;
+	border-bottom: 1px solid #6b7280;
 	margin-bottom: 1rem;
 
 	> .title {
 		margin-left: 6rem;
-		border-right: 1px solid gray;
+		border-right: 1px solid #6b7280;
 	}
 
 	> .release {

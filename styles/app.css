@@ -17,7 +17,7 @@ button {
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
-	color: var(--text-color);
+	color: var(--text-primary);
 }
 
 #layout {
@@ -33,4 +33,8 @@ button {
 	overflow-y: auto;
 	scrollbar-width: none;
 	word-break: break-all;
+}
+
+.hidden {
+	display: none !important;
 }
