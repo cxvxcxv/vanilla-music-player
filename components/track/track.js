@@ -1,63 +1,56 @@
 import { formatDate } from '../../utils/formatDate.js';
 import { getLikedTrack, toggleLikedTrack } from '../../utils/likedStore.js';
 import { loadComponent } from '../../utils/loadComponent.js';
+import { setText } from '../../utils/setText.js';
 import { playTrack } from '../player/player.js';
 
 let cachedTrackTemplate = null;
 
 export async function renderTrack(track, index) {
-	// load component once
+	// Load template once
 	if (!cachedTrackTemplate) {
-		const el = await loadComponent(
+		const templateRoot = document.createElement('div');
+		cachedTrackTemplate = await loadComponent(
 			'/components/track/track.html',
 			'/components/track/track.css',
-			document.createElement('div')
+			templateRoot
 		);
-		cachedTrackTemplate = el; // store original
 	}
 
-	// clone so we don’t mutate the cached one
+	// clone fresh element
 	const el = cachedTrackTemplate.cloneNode(true);
 	el.dataset.index = index + 1;
+	el.dataset.url = track.previewUrl;
 
-	// populate content
-	const indexEl = el.querySelector('.track-index');
-	if (indexEl) indexEl.textContent = String(index + 1);
+	// dynamically set text
+	setText(el, '.track-index', String(index + 1));
+	setText(el, '.track-title', track.trackName);
+	setText(el, '.track-artist', track.artistName);
+	setText(el, '.track-date', formatDate(track.releaseDate));
 
 	const cover = el.querySelector('.track-cover');
 	if (cover) cover.src = track.artworkUrl100;
 
-	const title = el.querySelector('.track-title');
-	if (title) title.textContent = track.trackName;
-
-	const artist = el.querySelector('.track-artist');
-	if (artist) artist.textContent = track.artistName;
-
-	const date = el.querySelector('.track-date');
-	if (date) date.textContent = formatDate(track.releaseDate);
-
+	// like button logic
 	const likeBtn = el.querySelector('.track-like');
-
 	if (likeBtn) {
-		// style liked tracks like button
-		const isLiked = getLikedTrack(track.previewUrl);
-		isLiked
-			? likeBtn.classList.add('liked')
-			: likeBtn.classList.remove('liked');
+		const updateLikeState = () => {
+			likeBtn.classList.toggle('liked', !!getLikedTrack(track.previewUrl));
+		};
+
+		// init state
+		updateLikeState();
 
 		// toggle on click
 		likeBtn.addEventListener('click', e => {
 			e.stopPropagation();
 			toggleLikedTrack(track);
-
-			likeBtn.classList.contains('liked')
-				? likeBtn.classList.remove('liked')
-				: likeBtn.classList.add('liked');
+			updateLikeState();
 		});
 	}
 
 	// play track on click
-	el.addEventListener('click', e => {
+	el.addEventListener('click', () => {
 		playTrack(track.previewUrl, {
 			cover: track.artworkUrl100,
 			title: track.trackName,
@@ -65,8 +58,6 @@ export async function renderTrack(track, index) {
 			element: el,
 		});
 	});
-
-	el.dataset.url = track.previewUrl;
 
 	return el;
 }

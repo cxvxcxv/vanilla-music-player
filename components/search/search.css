@@ -1,31 +1,60 @@
 @import '/styles/shared.css';
 
-.search {
+.search-header {
+	height: 16rem;
 	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
+	justify-content: center;
+	align-items: center;
 	padding: 1rem;
+	background: #56ff9f;
+	background: radial-gradient(
+		circle,
+		rgba(86, 255, 159, 1) 0%,
+		rgba(86, 86, 255, 1) 100%
+	);
+	margin: -1rem -1rem 1rem -1rem;
+	box-shadow: 0 -10rem 16rem var(--background-color) inset;
+	> h1 {
+		font-size: 3rem;
+		font-weight: 800;
+	}
 }
 
 #search-form {
 	display: flex;
-	gap: 1rem;
-	margin-bottom: 2rem;
+	position: relative;
 }
 
-.search input {
-	flex: 1;
+#search-input {
 	padding: 0.5rem;
-	border: 1px solid #ccc;
-	border-radius: 1rem;
+	border: 1px solid var(--text-primary);
+	border-radius: 2rem;
+	width: 24rem;
+	font-size: 1.2rem;
+	padding: 1rem;
+	padding-right: 1rem;
+	outline: none;
+	text-align: center;
+	background-color: transparent;
+	color: var(--text-primary) !important;
 }
 
-.search-button {
-	background: var(--primary-color);
-	border: none;
+#search-input::placeholder {
+	color: var(--text-primary);
+}
+
+#search-button {
+	display: flex;
+	border-radius: 100%;
+	align-items: center;
+	justify-content: center;
+	background: transparent;
 	padding: 0.5rem 1rem;
-	border-radius: 1rem;
 	cursor: pointer;
+	position: absolute;
+	right: 0;
+	height: 3.5rem;
+	width: 3.5rem;
 }
 
 .search-headings {
