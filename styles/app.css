@@ -38,3 +38,22 @@ button {
 .hidden {
 	display: none !important;
 }
+
+.page-header {
+	height: 16rem;
+	display: flex;
+	align-items: end;
+	padding: 1rem;
+	background: #56ff9f;
+	background: radial-gradient(
+		circle,
+		rgba(86, 255, 159, 1) 0%,
+		rgba(86, 86, 255, 1) 100%
+	);
+	margin: -1rem -1rem 2rem -1rem;
+	box-shadow: 0 -10rem 16rem var(--background-color) inset;
+	> h1 {
+		font-size: 3rem;
+		font-weight: 800;
+	}
+}

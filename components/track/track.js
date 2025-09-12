@@ -1,4 +1,5 @@
 import { formatDate } from '../../utils/formatDate.js';
+import { addHistoryTrack } from '../../utils/historyStore.js';
 import { getLikedTrack, toggleLikedTrack } from '../../utils/likedStore.js';
 import { loadComponent } from '../../utils/loadComponent.js';
 import { setText } from '../../utils/setText.js';
@@ -57,6 +58,7 @@ export async function renderTrack(track, index) {
 			artist: track.artistName,
 			element: el,
 		});
+		addHistoryTrack(track);
 	});
 
 	return el;

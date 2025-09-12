@@ -1,3 +1,4 @@
+import { initHistory } from './components/history/history.js';
 import { initLiked } from './components/liked/liked.js';
 import { initPlayer } from './components/player/player.js';
 import { initSearch } from './components/search/search.js';
@@ -7,5 +8,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 	await initPlayer(document.getElementById('player'));
 	await initSearch(document.getElementById('search'));
 	await initLiked(document.getElementById('liked'));
+	await initHistory(document.getElementById('history'));
 	await initSidebar(document.getElementById('sidebar'));
 });
