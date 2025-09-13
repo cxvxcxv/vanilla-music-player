@@ -68,6 +68,7 @@
 	border-radius: 3px;
 	outline: none;
 	cursor: pointer;
+	transition: background 0.2s ease-out;
 
 	/* show fill up to --progress */
 	background: linear-gradient(
@@ -98,4 +99,55 @@
 	color: var(--text-primary);
 	width: 40px;
 	text-align: center;
+}
+
+.player-end {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	justify-self: flex-end;
+}
+
+#player-volume-toggle {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	> svg {
+		height: 1.2rem;
+		width: 1.2rem;
+		stroke: var(--text-secondary);
+	}
+}
+
+#player-volume {
+	appearance: none;
+	width: 7rem;
+	height: 5px;
+	border-radius: 3px;
+	outline: none;
+	cursor: pointer;
+	transition: background 0.2s ease-out;
+
+	/* show fill up to --progress */
+	background: linear-gradient(
+		to right,
+		var(--text-secondary) var(--volume, 0%),
+		var(--text-primary) var(--volume, 0%)
+	);
+}
+
+/* chrome, safari, edge - remove thumb */
+#player-volume::-webkit-slider-thumb {
+	appearance: none;
+	width: 0;
+	height: 0;
+}
+
+/* firefox - remove thumb */
+#player-volume::-moz-range-thumb {
+	width: 0;
+	height: 0;
+	border: none;
+	background-color: transparent;
 }
