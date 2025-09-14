@@ -20,8 +20,8 @@ let audio,
 	currentTimeEl = null,
 	totalTimeEl = null,
 	volumeBtn,
-	volumeIcon,
-	volumeEl = null;
+	volumeEl = null,
+	lastVolume = 1;
 
 export async function initPlayer(container) {
 	const playerRoot = await loadComponent(
@@ -116,6 +116,25 @@ export async function initPlayer(container) {
 		updateVolumeIcon(unit);
 
 		setUserSetting(USER_SETTINGS.VOLUME, unit);
+	});
+
+	//toggle volume mute/unmute
+	volumeBtn.addEventListener('click', () => {
+		if (audio.volume > 0) {
+			lastVolume = audio.volume;
+			audio.volume = 0;
+			volumeEl.value = 0;
+			volumeEl.style.setProperty('--volume', '0%');
+			updateVolumeIcon(0);
+			setUserSetting(USER_SETTINGS.VOLUME, 0);
+		} else {
+			const restored = lastVolume || 1;
+			audio.volume = restored;
+			volumeEl.value = restored;
+			volumeEl.style.setProperty('--volume', `${restored * 100}%`);
+			updateVolumeIcon(restored);
+			setUserSetting(USER_SETTINGS.VOLUME, restored);
+		}
 	});
 
 	// init volume
