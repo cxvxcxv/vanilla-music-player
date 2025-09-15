@@ -23,8 +23,9 @@ let audio,
 	volumeEl = null,
 	lastVolume = 1,
 	repeatBtn,
-	isOnRepeat = getUserSetting(USER_SETTINGS.REPEAT, false);
-// isShuffleOn = getUserSetting(USER_SETTINGS.SHUFFLE, false);
+	isOnRepeat = getUserSetting(USER_SETTINGS.REPEAT, false),
+	shuffleBtn,
+	isShuffleOn = getUserSetting(USER_SETTINGS.SHUFFLE, false);
 
 export async function initPlayer(container) {
 	const playerRoot = await loadComponent(
@@ -38,6 +39,7 @@ export async function initPlayer(container) {
 	coverEl = playerRoot.querySelector('#player-cover');
 	titleEl = playerRoot.querySelector('#player-title');
 	artistEl = playerRoot.querySelector('#player-artist');
+	shuffleBtn = playerRoot.querySelector('#player-shuffle');
 	prevBtn = playerRoot.querySelector('#player-prev');
 	toggleBtn = playerRoot.querySelector('#player-toggle');
 	nextBtn = playerRoot.querySelector('#player-next');
@@ -53,34 +55,53 @@ export async function initPlayer(container) {
 		return;
 	}
 
-	// init
+	// ---------- INITIALIZATION ----------
 
 	// apply shuffle
-	// shuffleBtn.classList.toggle('active', isShuffleOn);
+	shuffleBtn.classList.toggle('active', isShuffleOn);
 
-	// applly repeat
+	// apply repeat
 	audio.loop = isOnRepeat;
 	repeatBtn.classList.toggle('active', isOnRepeat);
 
-	// main toggle button (in the player UI)
-	toggleBtn.addEventListener('click', e => {
-		e.stopPropagation();
-		if (audio.paused && audio.src) audio.play();
-		else audio.pause();
-	});
+	// apply volume
+	const storedVolume = getUserSetting(USER_SETTINGS.VOLUME, 1);
+	audio.volume = storedVolume;
+	volumeEl.value = storedVolume;
+	volumeEl.style.setProperty('--volume', `${storedVolume * 100}%`);
+	updateVolumeIcon(storedVolume);
+
+	// ---------- LOGIC ----------
 
 	// player buttons
 
+	//shuffle button
+	shuffleBtn?.addEventListener('click', () => {
+		isShuffleOn = !isShuffleOn;
+		shuffleBtn.classList.toggle('active', isShuffleOn);
+		setUserSetting(USER_SETTINGS.SHUFFLE, isShuffleOn);
+	});
+
+	// prev button
 	prevBtn?.addEventListener('click', e => {
 		e.stopPropagation();
 		skipTrack(-1);
 	});
 
+	// main toggle button
+	toggleBtn?.addEventListener('click', e => {
+		e.stopPropagation();
+		if (audio.paused && audio.src) audio.play();
+		else audio.pause();
+	});
+
+	// next button
 	nextBtn?.addEventListener('click', e => {
 		e.stopPropagation();
 		skipTrack(1);
 	});
 
+	// repeat button
 	repeatBtn?.addEventListener('click', () => {
 		isOnRepeat = !isOnRepeat;
 		audio.loop = isOnRepeat;
@@ -140,7 +161,7 @@ export async function initPlayer(container) {
 		setUserSetting(USER_SETTINGS.VOLUME, unit);
 	});
 
-	//toggle volume mute/unmute
+	// toggle volume mute/unmute
 	volumeBtn.addEventListener('click', () => {
 		if (audio.volume > 0) {
 			lastVolume = audio.volume;
@@ -159,12 +180,10 @@ export async function initPlayer(container) {
 		}
 	});
 
-	// init volume
-	const storedVolume = getUserSetting(USER_SETTINGS.VOLUME, 1);
-	audio.volume = storedVolume;
-	volumeEl.value = storedVolume;
-	volumeEl.style.setProperty('--volume', `${storedVolume * 100}%`);
-	updateVolumeIcon(storedVolume);
+	// play tracks one after another
+	audio.addEventListener('ended', () => {
+		skipTrack(1);
+	});
 }
 
 /**
@@ -212,8 +231,18 @@ function skipTrack(direction) {
 	);
 	const currentIndex = allTracks.indexOf(currentTrackEl);
 
-	let newIndex =
-		(currentIndex + direction + allTracks.length) % allTracks.length;
+	let newIndex;
+
+	if (isShuffleOn) {
+		// pick a random index that is not the current one
+		do {
+			newIndex = Math.floor(Math.random() * allTracks.length);
+		} while (newIndex === currentIndex && allTracks.length > 1);
+	} else {
+		// normal linear skipping
+		newIndex = (currentIndex + direction + allTracks.length) % allTracks.length;
+	}
+
 	const newTrackEl = allTracks[newIndex];
 	const url = newTrackEl.dataset.url;
 
