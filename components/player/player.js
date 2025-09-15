@@ -21,7 +21,10 @@ let audio,
 	totalTimeEl = null,
 	volumeBtn,
 	volumeEl = null,
-	lastVolume = 1;
+	lastVolume = 1,
+	repeatBtn,
+	isOnRepeat = getUserSetting(USER_SETTINGS.REPEAT, false);
+// isShuffleOn = getUserSetting(USER_SETTINGS.SHUFFLE, false);
 
 export async function initPlayer(container) {
 	const playerRoot = await loadComponent(
@@ -38,6 +41,7 @@ export async function initPlayer(container) {
 	prevBtn = playerRoot.querySelector('#player-prev');
 	toggleBtn = playerRoot.querySelector('#player-toggle');
 	nextBtn = playerRoot.querySelector('#player-next');
+	repeatBtn = playerRoot.querySelector('#player-repeat');
 	progressEl = playerRoot.querySelector('#player-progress');
 	currentTimeEl = playerRoot.querySelector('#player-current-time');
 	totalTimeEl = playerRoot.querySelector('#player-total-time');
@@ -49,6 +53,15 @@ export async function initPlayer(container) {
 		return;
 	}
 
+	// init
+
+	// apply shuffle
+	// shuffleBtn.classList.toggle('active', isShuffleOn);
+
+	// applly repeat
+	audio.loop = isOnRepeat;
+	repeatBtn.classList.toggle('active', isOnRepeat);
+
 	// main toggle button (in the player UI)
 	toggleBtn.addEventListener('click', e => {
 		e.stopPropagation();
@@ -56,7 +69,8 @@ export async function initPlayer(container) {
 		else audio.pause();
 	});
 
-	// skip buttons
+	// player buttons
+
 	prevBtn?.addEventListener('click', e => {
 		e.stopPropagation();
 		skipTrack(-1);
@@ -65,6 +79,14 @@ export async function initPlayer(container) {
 	nextBtn?.addEventListener('click', e => {
 		e.stopPropagation();
 		skipTrack(1);
+	});
+
+	repeatBtn?.addEventListener('click', () => {
+		isOnRepeat = !isOnRepeat;
+		audio.loop = isOnRepeat;
+
+		repeatBtn.classList.toggle('active', isOnRepeat);
+		setUserSetting(USER_SETTINGS.REPEAT, isOnRepeat);
 	});
 
 	// audio events

@@ -49,10 +49,21 @@
 .player-buttons {
 	display: flex;
 	gap: 2rem;
+
 	> button {
 		display: flex;
 		place-items: center;
 	}
+}
+
+#player-repeat svg,
+#player-shuffle svg {
+	stroke: var(--text-primary);
+}
+
+#player-repeat.active svg,
+#player-shuffle.active svg {
+	stroke: var(--primary-color);
 }
 
 .player-progress-wrapper {
