@@ -1,4 +1,7 @@
-import { getHistoryTracks } from '../../utils/historyStore.js';
+import {
+	getHistoryTracks,
+	removeHistoryTracks,
+} from '../../utils/historyStore.js';
 import { loadComponent } from '../../utils/loadComponent.js';
 import { renderTrack } from '../track/track.js';
 
@@ -9,15 +12,24 @@ export async function initHistory(container) {
 		container
 	);
 
+	const clearBtn = historyRoot.querySelector('#history-clear');
 	const results = historyRoot.querySelector('#history-results');
+
+	clearBtn.addEventListener('click', () => {
+		removeHistoryTracks();
+		renderHistoryList();
+	});
 
 	function renderHistoryList() {
 		results.innerHTML = '';
 		const tracks = getHistoryTracks();
 		if (!tracks.length) {
+			clearBtn.classList.add('hidden');
 			results.innerHTML = '<h2>Your history is clear.</h2>';
 			return;
 		}
+
+		clearBtn.classList.remove('hidden');
 		tracks.forEach(async (track, index) => {
 			const el = await renderTrack(track, index);
 			results.appendChild(el);

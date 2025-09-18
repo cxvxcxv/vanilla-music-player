@@ -1,0 +1,26 @@
+.history-clear-layout {
+	display: flex;
+	justify-content: center;
+}
+
+#history-clear {
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+	color: var(--text-primary);
+	border: 1px solid var(--text-primary);
+	padding: 0.5rem 1rem;
+	border-radius: 1rem;
+	font-weight: 500;
+	margin-top: 1rem;
+
+	svg {
+		width: 1.25rem;
+		height: 1.25rem;
+	}
+}
+
+#history-clear:hover {
+	color: var(--primary-color);
+	border: 1px solid var(--primary-color);
+}
