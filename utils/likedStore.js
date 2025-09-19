@@ -2,7 +2,8 @@ const STORAGE_KEY = 'liked-tracks';
 
 export function getLikedTracks() {
 	const raw = localStorage.getItem(STORAGE_KEY);
-	return raw ? JSON.parse(raw) : [];
+	const tracks = raw ? JSON.parse(raw) : [];
+	return tracks.slice().reverse();
 }
 
 export function getLikedTrack(url) {

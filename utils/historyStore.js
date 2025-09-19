@@ -2,7 +2,8 @@ const STORAGE_KEY = 'history-tracks';
 
 export function getHistoryTracks() {
 	const raw = localStorage.getItem(STORAGE_KEY);
-	return raw ? JSON.parse(raw) : [];
+	const tracks = raw ? JSON.parse(raw) : [];
+	return tracks.slice().reverse();
 }
 
 export function setHistoryTracks(tracks) {
