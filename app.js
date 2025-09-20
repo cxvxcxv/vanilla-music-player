@@ -2,6 +2,7 @@ import { initHistory } from './components/history/history.js';
 import { initLiked } from './components/liked/liked.js';
 import { initPlayer } from './components/player/player.js';
 import { initSearch } from './components/search/search.js';
+import { initSettings } from './components/settings/settings.js';
 import { initSidebar } from './components/sidebar/sidebar.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -9,5 +10,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 	await initSearch(document.getElementById('search'));
 	await initLiked(document.getElementById('liked'));
 	await initHistory(document.getElementById('history'));
+	await initSettings(document.getElementById('settings'));
 	await initSidebar(document.getElementById('sidebar'));
 });
