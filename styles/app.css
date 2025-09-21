@@ -13,6 +13,19 @@ button {
 	cursor: pointer;
 }
 
+select {
+	background-color: transparent;
+	border: none;
+	font-size: 1rem;
+	color: var(--text-primary);
+	cursor: pointer;
+	outline: none;
+
+	option {
+		background-color: var(--background-color);
+	}
+}
+
 #app {
 	display: flex;
 	flex-direction: column;

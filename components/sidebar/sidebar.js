@@ -1,4 +1,6 @@
+import { USER_SETTINGS } from '../../constants/user-settings.constants.js';
 import { loadComponent } from '../../utils/loadComponent.js';
+import { getUserSetting } from '../../utils/userSettingsStore.js';
 
 export async function initSidebar(container) {
 	const sidebarRoot = await loadComponent(
@@ -7,11 +9,11 @@ export async function initSidebar(container) {
 		container
 	);
 
-	const buttons = sidebarRoot.querySelectorAll('button');
+	const buttons = Array.from(sidebarRoot.querySelectorAll('button'));
 	const pages = document.querySelectorAll('[data-page-section]');
 
 	function showPage(pageName) {
-		// hide all pages
+		// hide all pages except the one requested
 		pages.forEach(page => {
 			page.classList.toggle('hidden', page.dataset.pageSection !== pageName);
 		});
@@ -28,9 +30,23 @@ export async function initSidebar(container) {
 		});
 	});
 
-	// default: show first button page
-	if (buttons.length > 0) {
-		buttons[0].classList.add('active');
-		showPage(buttons[0].dataset.page);
+	// ---------- DEFAULT PAGE ----------
+	const savedPage = getUserSetting(USER_SETTINGS.STARTING_PAGE, null);
+
+	let targetButton;
+	if (savedPage) {
+		// find a sidebar button whose data-page matches the saved page
+		targetButton = buttons.find(btn => btn.dataset.page === savedPage);
+	}
+
+	// fallback to first button if no saved setting or invalid
+	if (!targetButton && buttons.length > 0) {
+		targetButton = buttons[0];
+	}
+
+	// mark active + show page
+	if (targetButton) {
+		targetButton.classList.add('active');
+		showPage(targetButton.dataset.page);
 	}
 }
