@@ -7,18 +7,37 @@
 	</header>
 
 	<div>
+		<!-- starting page -->
 		<div class="settings-setting">
 			<p>Starting Page</p>
-			<select
-				name="starting-page-select"
-				id="settings-starting-page-select"
-			>
-				<!-- hardcoded by now, can be scaled in js with mapping -->
+			<select id="settings-starting-page">
 				<option value="search">Search</option>
 				<option value="liked">Liked</option>
 				<option value="history">History</option>
 				<option value="settings">Settings</option>
 			</select>
 		</div>
+
+		<!-- primary color -->
+		<div class="settings-setting">
+			<p>Primary Color</p>
+			<input
+				type="color"
+				id="settings-primary-color"
+				value="#ff5656"
+			/>
+		</div>
+
+		<!-- theme -->
+		<!-- <div class="settings-setting">
+			<p>Dark Mode</p>
+			<label>
+				<input
+					type="checkbox"
+					id="settings-theme"
+				/>
+				Enable
+			</label>
+		</div> -->
 	</div>
 </section>
