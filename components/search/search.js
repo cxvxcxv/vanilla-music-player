@@ -13,6 +13,7 @@ export async function initSearch(container) {
 	const input = searchRoot.querySelector('#search-input');
 	const form = searchRoot.querySelector('#search-form');
 	const results = searchRoot.querySelector('#search-results');
+	const loader = searchRoot.querySelector('#search-loader');
 
 	if (!input) {
 		console.error('Search input or button not found');
@@ -26,6 +27,9 @@ export async function initSearch(container) {
 		const query = input.value.trim();
 		if (!query) return;
 
+		results.innerHTML = '';
+		loader.classList.remove('hidden');
+
 		// fetch
 		const data = await fetchFromItunes({
 			term: query,
@@ -36,8 +40,11 @@ export async function initSearch(container) {
 		// display a msg if a track is not found
 		if (!data.results.length) {
 			results.innerHTML = `<h1>${query} not found. Try another search</h1>`;
+			loader.classList.add('hidden');
 			return;
 		}
+
+		loader.classList.add('hidden');
 
 		// add header row once
 		results.innerHTML = `

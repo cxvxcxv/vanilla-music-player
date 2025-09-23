@@ -3,4 +3,11 @@
 	--background-color: #1f1f1f;
 	--text-primary: #f6f6f6;
 	--text-secondary: #6b7280;
+	--animation-spin: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
 }
