@@ -29,10 +29,51 @@
 
 .settings-setting input[type='color'] {
 	appearance: none;
-	background: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+
+	width: 2.2rem;
+	height: 2.2rem;
+
+	border-radius: 50%;
 	border: none;
-	width: 2rem;
-	height: 2rem;
 	cursor: pointer;
-	box-shadow: 0 0 0 1px #ccc;
+
+	box-shadow: 0 0 0 2px var(--text-primary);
+	transition: box-shadow 0.2s ease, transform 0.15s ease;
+	padding: 0;
+	background: none;
+}
+
+/* Chrome/Safari */
+.settings-setting input[type='color']::-webkit-color-swatch-wrapper {
+	padding: 0;
+	border-radius: 50%;
+}
+
+.settings-setting input[type='color']::-webkit-color-swatch {
+	border: none;
+	border-radius: 50%;
+}
+
+/* Firefox */
+.settings-setting input[type='color']::-moz-color-swatch {
+	border: none;
+	border-radius: 50%;
+}
+
+.settings-setting input[type='color']:hover {
+	transform: scale(1.1);
+	box-shadow: 0 0 0 3px var(--primary-color);
+}
+
+.settings-setting input[type='color']:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px var(--primary-color);
+}
+
+.settings-header-colors {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
 }

@@ -4,6 +4,8 @@
 	--text-primary: #f6f6f6;
 	--text-secondary: #6b7280;
 	--animation-spin: spin 1s linear infinite;
+	--header-color-1: #56ff9f;
+	--header-color-2: #5656ff;
 }
 
 @keyframes spin {

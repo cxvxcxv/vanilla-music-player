@@ -49,7 +49,7 @@
 	align-items: center;
 
 	> svg {
-		stroke: var(--text-primary);
+		stroke: var(--primary-color);
 		animation: var(--animation-spin);
 	}
 }
