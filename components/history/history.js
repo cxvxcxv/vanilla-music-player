@@ -7,8 +7,8 @@ import { renderTrack } from '../track/track.js';
 
 export async function initHistory(container) {
 	const historyRoot = await loadComponent(
-		'/components/history/history.html',
-		'/components/history/history.css',
+		'components/history/history.html',
+		'components/history/history.css',
 		container
 	);
 

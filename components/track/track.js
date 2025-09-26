@@ -12,8 +12,8 @@ export async function renderTrack(track, index) {
 	if (!cachedTrackTemplate) {
 		const templateRoot = document.createElement('div');
 		cachedTrackTemplate = await loadComponent(
-			'/components/track/track.html',
-			'/components/track/track.css',
+			'components/track/track.html',
+			'components/track/track.css',
 			templateRoot
 		);
 	}

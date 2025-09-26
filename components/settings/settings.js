@@ -7,8 +7,8 @@ import {
 
 export async function initSettings(container) {
 	const settingsRoot = await loadComponent(
-		'/components/settings/settings.html',
-		'/components/settings/settings.css',
+		'components/settings/settings.html',
+		'components/settings/settings.css',
 		container
 	);
 

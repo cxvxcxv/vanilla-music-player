@@ -4,8 +4,8 @@ import { renderTrack } from '../track/track.js';
 
 export async function initSearch(container) {
 	const searchRoot = await loadComponent(
-		'/components/search/search.html',
-		'/components/search/search.css',
+		'components/search/search.html',
+		'components/search/search.css',
 		container
 	);
 

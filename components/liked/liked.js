@@ -4,8 +4,8 @@ import { renderTrack } from '../track/track.js';
 
 export async function initLiked(container) {
 	const likedRoot = await loadComponent(
-		'/components/liked/liked.html',
-		'/components/liked/liked.css',
+		'components/liked/liked.html',
+		'components/liked/liked.css',
 		container
 	);
 

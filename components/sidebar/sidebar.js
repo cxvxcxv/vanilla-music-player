@@ -4,8 +4,8 @@ import { getUserSetting } from '../../utils/userSettingsStore.js';
 
 export async function initSidebar(container) {
 	const sidebarRoot = await loadComponent(
-		'/components/sidebar/sidebar.html',
-		'/components/sidebar/sidebar.css',
+		'components/sidebar/sidebar.html',
+		'components/sidebar/sidebar.css',
 		container
 	);
 

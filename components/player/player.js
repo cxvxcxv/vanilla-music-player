@@ -37,8 +37,8 @@ let currentTrackEl = null; // reference to active track element
 
 export async function initPlayer(container) {
 	const playerRoot = await loadComponent(
-		'/components/player/player.html',
-		'/components/player/player.css',
+		'components/player/player.html',
+		'components/player/player.css',
 		container
 	);
 
