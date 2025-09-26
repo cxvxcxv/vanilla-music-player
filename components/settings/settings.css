@@ -77,3 +77,14 @@
 	align-items: center;
 	gap: 1rem;
 }
+
+@media (max-width: 768px) {
+	.settings-layout {
+		gap: 3rem;
+		padding: 0;
+	}
+	.settings-setting {
+		grid-template-columns: auto;
+		gap: 0.5rem;
+	}
+}

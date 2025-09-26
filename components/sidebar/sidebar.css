@@ -69,3 +69,24 @@
 .sidebar-button:hover {
 	background-color: #39393b;
 }
+
+@media (max-width: 768px) {
+	.sidebar {
+		width: 72px;
+		min-width: 72px;
+		padding: 0.5rem;
+	}
+
+	.sidebar-header h1 {
+		display: none;
+	}
+
+	.sidebar-button {
+		justify-content: center;
+		gap: 0;
+	}
+
+	.sidebar-button span {
+		display: none;
+	}
+}

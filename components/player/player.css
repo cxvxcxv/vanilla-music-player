@@ -162,3 +162,90 @@
 	border: none;
 	background-color: transparent;
 }
+
+@media (max-width: 768px) {
+	.player {
+		padding: 0.5rem;
+		height: auto;
+	}
+
+	.player-ui {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.player-covernames {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		text-align: left;
+		width: 100%;
+	}
+
+	.player-cover {
+		width: 3rem;
+		height: 3rem;
+		border-radius: 6px;
+		object-fit: cover;
+	}
+
+	.player-title {
+		font-size: 0.9rem;
+		font-weight: 600;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.player-artist {
+		font-size: 0.75rem;
+		color: var(--text-secondary);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	/* Center controls */
+	.player-center {
+		display: flex;
+		flex-direction: column-reverse;
+		align-items: center;
+		gap: 0.5rem;
+		width: 100%;
+	}
+
+	.player-buttons {
+		display: flex;
+		justify-content: center;
+		gap: 1.25rem;
+	}
+
+	.player-buttons button {
+		width: 40px;
+		height: 40px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 50%;
+	}
+
+	/* Progress bar */
+	.player-progress-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		gap: 0.5rem;
+	}
+
+	#player-progress {
+		flex: 1;
+	}
+
+	/* End controls (volume etc.) */
+	.player-end {
+		display: none;
+	}
+}

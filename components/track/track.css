@@ -90,3 +90,13 @@
 	fill: var(--primary-color);
 	stroke: none;
 }
+
+@media (max-width: 768px) {
+	.track {
+		grid-template-columns: 1fr auto;
+	}
+
+	.track-release {
+		display: none;
+	}
+}
