@@ -257,7 +257,7 @@ function createTrackToggle(trackEl) {
 
 	indexEl.innerHTML = `
 		<button class="track-toggle">
-			<img src="../../assets/icons/pause.svg" alt="pause">
+			<img src="assets/icons/pause.svg" alt="pause">
 		</button>
 	`;
 
@@ -316,8 +316,8 @@ function updateProgress() {
 function updatePlayerToggleIcon() {
 	if (!toggleBtn) return;
 	toggleBtn.innerHTML = isPlaying
-		? `<img src="../../assets/icons/pause.svg" alt="pause" />`
-		: `<img src="../../assets/icons/play.svg" alt="play" />`;
+		? `<img src="assets/icons/pause.svg" alt="pause" />`
+		: `<img src="assets/icons/play.svg" alt="play" />`;
 }
 
 // update track list play/pause icon
@@ -327,8 +327,8 @@ function updateTrackToggleIcon(playing) {
 	const trackToggle = currentTrackEl.querySelector('.track-toggle');
 	if (trackToggle) {
 		trackToggle.innerHTML = playing
-			? `<img src="../../assets/icons/pause.svg" alt="pause" />`
-			: `<img src="../../assets/icons/play.svg" alt="play" />`;
+			? `<img src="assets/icons/pause.svg" alt="pause" />`
+			: `<img src="assets/icons/play.svg" alt="play" />`;
 	}
 }
 
